@@ -1,16 +1,26 @@
-# This is a sample Python script.
+from betfairlightweight import APIClient
+from CONSTS import *
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+# Instantiate the API client
+client = APIClient(app_key=APPLICATION_KEY_1, username=USER_NAME, password=PASSWORD, certs=CERT_FILE_LOCAITON)
 
+# Login to the API
+client.login()
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+# Get a list of all live events
+events = client.betting.list_event_types()
 
+# Find the event of interest
+event_name = "Soccer"
+event_of_interest = next((x for x in events if x.event_type.name == event_name), None)
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+# Get the market_catalogue of the event
+market_catalogue = client.betting.list_market_catalogue(filter={"eventTypeIds": [event_of_interest.event_type.id]})
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+# Get the percentage completion of the event
+market_book = client.betting.list_market_book(market_ids=[market_catalogue[0].market_id])
+
+print(f'{market_book[0].market_info.competition} is {market_book[0].market_info.percentage_complete}% completed')
+
+# Logout from the API
+client.logout()
