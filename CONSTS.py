@@ -6,4 +6,4 @@ APPLICATION_KEY_2 = "Wfh6RQ0W8Y1iDKvX"
 CERT_FILE_LOCAITON = "C:/Program Files/OpenSSL-Win64/bin/cert.pem"
 
 USER_NAME = "shanto12@gmail.com"
-PASSWORD = "leeleelee1z!"
+PASSWORD = ""
